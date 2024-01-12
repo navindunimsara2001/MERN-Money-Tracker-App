@@ -12,7 +12,7 @@ function App() {
     getTransactions().then((transactions) => {
       setTranactions(transactions);
     })
-  }, [])
+  })
   //  to get data from backend
   const getTransactions = async () => {
     const getUrl = 'http://localhost:5000/api/transactions';
@@ -35,7 +35,8 @@ function App() {
       .then((result) => {
         console.log(result)
       }
-      )
+      );
+
   }
 
 let balance = 0;
