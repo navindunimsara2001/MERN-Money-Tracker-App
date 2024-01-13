@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+//import { saveAs } from 'file-saver';
 
 function App() {
   const [name, setName] = useState('');
@@ -12,7 +13,7 @@ function App() {
     getTransactions().then((transactions) => {
       setTranactions(transactions);
     })
-  })
+  },[])
   //  to get data from backend
   const getTransactions = async () => {
     const getUrl = 'http://localhost:5000/api/transactions';
@@ -39,15 +40,21 @@ function App() {
 
   }
 
-let balance = 0;
-for(const transaction of transactions){
-  balance = balance+transaction.price;
-}
-balance=balance.toFixed(2);
-// to get fraction
-let fraction = balance.split('.')[1];
-// decimal part
-balance = balance.split('.')[0];
+  let balance = 0;
+  for (const transaction of transactions) {
+    balance = balance + transaction.price;
+  }
+  balance = balance.toFixed(2);
+  // to get fraction
+  let fraction = balance.split('.')[1];
+  // decimal part
+  balance = balance.split('.')[0];
+
+  // download
+  const download = async ()=>{
+    const url = 'http://localhost:5000/api/download';
+    await fetch(url);
+  }
 
   return (
     <main>
@@ -72,6 +79,7 @@ balance = balance.split('.')[0];
         </div>
         <button>Add new transaction</button>
       </form>
+      <button onClick={download}>Download List</button>
       {transactions.length > 0 && transactions.map((transaction) => (
 
         <div className='transactions'>

@@ -3,9 +3,11 @@ const app = express();
 const cors = require('cors');
 const Transaction = require('./models/transaction');
 const { default: mongoose } = require('mongoose');
+const downloadRoute = require('./genetatePDF');
 
 app.use(cors());
 app.use(express.json());
+app.use(downloadRoute);
 
 app.get('/api/test', (req, res) => {
     res.json({ success: true });
